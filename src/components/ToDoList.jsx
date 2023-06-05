@@ -70,16 +70,17 @@ function TodoList() {
   return (
     <div>
       {showModal && (
-        <div>
-          <div>
+        <div className="fixed  w-full left-0 top-0 h-full bg-transparentBlack flex items-center justify-center">
+          <div className="bg-white p-8 rounded-md flex flex-col justify-center items-center">
             <input
+              className="flex justify-center items-center w-full border p-2 rounded-md outline-none mb-8 "
               value={newTask}
               onChange={(e) => setNewTask(e.target.value)}
               placeholder={
                 currentTodo ? "Update your task here" : "Enter your task here"
               }
             />
-            <div>
+            <div className="flex justify-items-center items-center">
               {currentTodo ? (
                 <>
                   <button
@@ -87,15 +88,27 @@ function TodoList() {
                       setShowModal(false);
                       handleUpdateToDoList(currentTodo.id, newTask);
                     }}
+                    className="bg-sunsetOrange text-white py-3 px-10 rounded-md"
                   >
                     Save
                   </button>
-                  <button onClick={() => setShowModal(false)}>Cancel</button>
+                  <button
+                    className="bg-Tangaroa rounded-md text-white py-3 px-10"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Cancel
+                  </button>
                 </>
               ) : (
                 <>
-                  <button onClick={() => setShowModal(false)}>Cancel</button>
                   <button
+                    className="bg-Tangaroa rounded-md text-white py-3 px-10 mx-4"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="bg-sunsetOrange text-white py-3 px-10 rounded-md"
                     onClick={() => {
                       handleAddTodo(newTask);
                       setShowModal(false);
@@ -110,18 +123,23 @@ function TodoList() {
         </div>
       )}
 
-      <div>
+      <div className=" flex items-center justify-center flex-col">
         {todoList.length === 0 ? (
-          <div>
-            <div>
+          <div className="mb-6">
+            <div className="sm:w-[500px] sm:h-[500px] min-w-[250px] min-[250px]">
               <img src={empty} alt="" />
             </div>
-            <p>You have no todo's, please add one.</p>
+            <p className="text-center text-Gray">
+              You have no todo's, please add one.
+            </p>
           </div>
         ) : (
-          <div>
-            <div>
-              <select onChange={(e) => handleSort(e.target.value)}>
+          <div className="container mx-auto mt-6">
+            <div className="flex justify-center mb-6">
+              <select
+                onChange={(e) => handleSort(e.target.value)}
+                className="p-1 outline-none text-sm"
+              >
                 <option value="All" className="text-sm">
                   All
                 </option>
@@ -135,12 +153,15 @@ function TodoList() {
             </div>
             <div>
               {sortToDoList.map((todo) => (
-                <div key={todo.id}>
+                <div
+                  key={todo.id}
+                  className="flex items-center justify-between mb-6 bg-Tangaroa mx-auto w-full md:w-[75%] rounded-md p-4"
+                >
                   <div
                     className={`${
                       todo.completed
-                        ? "line-through text-greenTeal"
-                        : "text-sunsetOrange"
+                        ? "line-through text-greenTeal cursor-pointer"
+                        : "text-sunsetOrange cursor-pointer hover:animate-pulse"
                     }`}
                     onClick={() => {
                       handleToggleCompleted(todo.id);
@@ -150,6 +171,7 @@ function TodoList() {
                   </div>
                   <div>
                     <button
+                      className="bg-blue-500 text-white p-1 rounded-md ml-2"
                       onClick={() => {
                         setShowModal(true);
                         setCurrentTodo(todo);
@@ -158,7 +180,10 @@ function TodoList() {
                     >
                       <TiPencil />
                     </button>
-                    <button onClick={() => handleDeleteToDo(todo.id)}>
+                    <button
+                      className="bg-sunsetOrange text-white p-1 rounded-md ml-2"
+                      onClick={() => handleDeleteToDo(todo.id)}
+                    >
                       <BsTrash />
                     </button>
                   </div>
@@ -168,6 +193,7 @@ function TodoList() {
           </div>
         )}
         <button
+          className="bg-sunsetOrange text-center text-white py-3 px-10 rounded-md"
           onClick={() => {
             setShowModal(true);
           }}
